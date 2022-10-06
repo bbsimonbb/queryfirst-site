@@ -2,7 +2,7 @@
 
 Version 2 marks a turning point for QueryFirst. We've taken the source private. We've got a load of new features, and some breaking changes, and we're going to start charging for a premium version. After 6 years as an open source project, the goal is to try something else to build momentum around the project.
 
-**TL;dr [Use this](./assets/Queryfirst-migrate.zip) migration tool to convert your projects.**
+**TL;dr [Use this](https://www.nuget.org/api/v2/package/net.queryfirst.QueryfirstMigrate/1.0.0) migration tool to convert your projects.**
 
 ## Breaking Changes
 
@@ -13,4 +13,4 @@ Version 2 marks a turning point for QueryFirst. We've taken the source private. 
   - The results class is now [MyQuery]QfDto.
 - We now use dependency injection for the connection factory. Repository instances using a static connection class was fence-sitting. Now we ask you to choose between full DI, with the connection factory injected into repositories, or full static. The static methods on the repository access the static connection factory.
 
-We have a [command-line tool](./assets/Queryfirst-migrate.zip) to help you convert your projects. It takes the name and path of the solution to convert.
+We have a [command-line tool](https://www.nuget.org/api/v2/package/net.queryfirst.QueryfirstMigrate/1.0.0) to help you convert your projects. Unzip the .nupkg and run the .exe, providing the name and path of the solution to convert.
