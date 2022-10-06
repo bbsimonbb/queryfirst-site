@@ -7,6 +7,7 @@ export default {
         text: 'Guide',
         items: [
           { text: 'Introduction', link: '/' },
+          { text: 'V2 Breaking Changes', link: '/v2-breaking-changes' },
           { text: 'Getting Started', link: '/getting-started' },
           {text: 'Authoring SQL', link: '/authoring-sql'},
           {text: 'The Generated Code', link:'/generated'},
