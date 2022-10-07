@@ -1,16 +1,3 @@
-<!--Start of Tawk.to Script-->
-<script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/633edef537898912e96d363a/1gempds7o';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
-</script>
-<!--End of Tawk.to Script-->
 ![An image](./images/ibm-sj-ad-1962.jpg)
 
 # QueryFirst - Frictionless Data Access
@@ -61,7 +48,7 @@ We expect that QueryFirst will quickly become your favourite data access method.
 
 \* only with the help of EF reverse POCO generator (not actually part of EF), but you'll need to open your solution _as administrator_, find the .tt and right-click on 'run custom tool'. Not kidding.
 
-\** Dapper makes parameters much easier, so you're encouraged, but not obliged, to use them. 
+\*\* Dapper makes parameters much easier, so you're encouraged, but not obliged, to use them. 
 
 
 
