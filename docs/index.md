@@ -43,6 +43,7 @@ We expect that QueryFirst will quickly become your favourite data access method.
 | Queries distributed and versioned with application code |x|x||x|
 | Bundles an integration test to verify your production schema ||||x|
 | Typesafe dynamic ORDER BY||x||x|
+| Expando params (EF Contains)|x|x||x|
 | Scaffolded INSERTS and UPDATES ||na||x|
 | Generated Typescript interfaces from your projections ||||x|
 

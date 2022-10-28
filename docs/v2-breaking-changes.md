@@ -1,8 +1,8 @@
 # Version 2 Breaking Changes
 
-Version 2 marks a turning point for QueryFirst. We've taken the source private. We've got a load of new features, and some breaking changes, and we're going to start charging for a premium version. After 6 years as an open source project, the goal is to try something else to build momentum around the project.
+Version 2 marks a turning point for QueryFirst. We've taken the source private. We've got a load of new features, and some breaking changes, and we're going to start charging for a premium version. After 6 years as an open source project, the goal is to try something else to build momentum around the project. There lots we'd love to do, but it depends on a revenue stream. The free version will do everything essential. New version 2 features like dynamic order-by, expando params and typescript generation will go into the premium version.
 
-**TL;dr [Use this](https://www.nuget.org/api/v2/package/net.queryfirst.QueryfirstMigrate/1.0.0) migration tool to convert your projects.**
+**TL;dr [Use this](https://github.com/bbsimonbb/QueryFirstMigrate) migration tool to convert your projects.**
 
 ## Breaking Changes
 
@@ -11,6 +11,14 @@ Version 2 marks a turning point for QueryFirst. We've taken the source private. 
 - The generated classes renamed. QueryFirst repositories and POCOs share a distinctive structure and role, so we wanted to put their provenance right up-front in the class names. 
   - Repositories are now called [MyQuery]QfRepo. Correspondingly, the interfaces are now I[MyQuery]QfRepo.
   - The results class is now [MyQuery]QfDto.
+
+  If you can't or don't want to make this change straight away, these suffixes are configurable (starting in v2.0.2). You just need to add the following to your qfconfig.json:
+
+```json
+"repoSuffix":"",
+"dtoSuffix":"Results",
+```
+
 - We now use dependency injection for the connection factory. Repository instances using a static connection class was fence-sitting. Now we ask you to choose between full DI, with the connection factory injected into repositories, or full static. The static methods on the repository access the static connection factory.
 
-We have a [command-line tool](https://www.nuget.org/api/v2/package/net.queryfirst.QueryfirstMigrate/1.0.0) to help you convert your projects. Unzip the .nupkg and run the .exe, providing the name and path of the solution to convert.
+We have a [command-line tool](https://www.nuget.org/api/v2/package/net.queryfirst.QueryfirstMigrate/1.0.0) to help you convert your projects. Unzip the .nupkg and run the .exe, providing the name and path of the solution to convert. The migration tool is [on github](https://github.com/bbsimonbb/QueryFirstMigrate), so you can also clone and contribute.
