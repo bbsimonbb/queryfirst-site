@@ -7,11 +7,19 @@ In Visual Studio, .sql files will open in the marvelous TSQL editor window. If y
 
 ## Parameters
 
-To add a parameter, just start using it directly in your SQL. With SQL Server, there's nothing else to do. When you save, we detect the parameters used in the query and add them as local variables in the designTime section. When we then generate the C# wrapper, these local variables will be converted to strongly typed ADO parameters. In the generated execute methods, the parameter order will be taken from the designTime section, so you can reorder the lines if you want to.
+To add a parameter, just start using it directly in your SQL. With SQL Server, there's nothing else to do. When you save, we detect the parameters used in the query and add them as local variables in the designTime section. When we then generate the C# wrapper, these local variables will be converted to strongly typed ADO parameters. In the generated execute methods, the parameter order will be taken from the designTime section, so you can reorder the lines if you want to. 
+
+In some situations, QueryFirst will be unable to sniff your parameters and an otherwise healthy query will fail with a `must declare local variable` error. Do not panic. You just need declare the parameter as a local variable in the design time section.
 
 ## Run your query as you develop
 
 You can test-run your query as you develop just by clicking play in the editor window. You can assign some test values to your parameters in the designTime section so that your query always runs and returns something. This designTime section is ignored at runtime.
+
+## Null
+
+Who ever liked or understood `DBNull.Value`? In QueryFirst, nulls are nulls. Nulls supplied as parameters to Execute methods become DB nulls in the query. Nulls returned by queries become C# nulls. If you're not already familiar with sql functions `isnull()` and `coalesce()`, they are very handy for optional filters, and for fine-grained control over your results.
+
+`ExecuteScalar()` always returns a nullable type, in case an execution returns no results. Likewise, GetOne() returns null if it finds nothing. The other Execute methods, if they return no results, will return an empty List, or an empty IEnumerable.
 
 ## Do you really need the designTime section?
 
@@ -115,4 +123,6 @@ Asterisk queries in SQL generate some controversy. Purists may balk, considering
 
 QueryFirst muddies this picture. On the one hand, it can be quite exciting to use * queries and watch new properties magically pop up in your dto's and typescript interfaces, and this may be fine for small teams. 
 
-For larger teams, be careful: you will want to clearly distinguish between breaking and non-breaking schema changes. Breaking schema changes (deletions) need to be made rapidly available to all active branches. In gitflow terms, make the schema change in a dedicated branch which you then rapidly merge into develop and all active branches. The subtlety is that **with QueryFirst, if you have asterisk queries in your project, adding a column becomes a breaking change**. Just the presence of the column in the development DB will cause it to be referenced by asterisk queries the next time they are regenerated, in any branch. These queries will then generate exceptions if they are deployed on a DB instance that doesn't yet have the new column. (The repository is expecting more columns than it receives, and will throw an IndexOutOfRange exception.) _Is that clear ?!_ Using QueryFirst [SelfTest()](/selftest.html) in your deployments will protect you in this situation.
+For larger teams, be careful: you will want to clearly distinguish between breaking and non-breaking schema changes. Breaking schema changes (normally deletions) need to be made rapidly available to all active branches. Make the schema change in a dedicated branch. Get your app building against the new schema, then rapidly merge into develop and all active branches. Non-breaking schema changes can live quietly in a feature branch until that branch is merged.
+
+The subtlety is that **with QueryFirst, if you have asterisk queries in your project, adding a column becomes a breaking change**. Just the presence of the column in the development DB will cause it to be picked up by asterisk queries the next time they are regenerated, in any branch. These queries will then throw if they are deployed on a DB instance that doesn't yet have the new column. (The repository class is expecting more columns than it receives, and will throw an IndexOutOfRange exception.) _Is that clear ?!_ Using QueryFirst [SelfTest()](/selftest.html) in your deployments will alert you, but won't fix the underlying problem.
