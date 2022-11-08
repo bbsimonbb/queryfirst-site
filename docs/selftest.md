@@ -11,6 +11,24 @@ QueryFirst does this by inserting a self-test method in the generated code. The 
 This feature is turned off by default. To turn it on, add this to your config file...
 
 ```json
-  "makeSelfTest":true,
+  "makeSelfTest": true,
 ```
 
+Then, you'll need to set up your project to host the generated methods. You're going to need five, yes five, nugets...
+- Microsoft.NET.Test.Sdk
+- QueryFirst.CoreLib
+- xunit
+- Xunit.DependencyInjection
+- xunit.runner.visualstudio
+
+If you haven't already got one, you're going to need a Startup class to register your production data source for DI. In the example below, NorthwindDB is our concrete implementation of QueryFirst.QueryFirstConnectionFactory.
+
+```C#
+public class Startup
+{
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddTransient<QueryFirst.QueryFirstConnectionFactory, NorthwindDB>();
+    }
+}
+```

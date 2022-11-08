@@ -106,3 +106,13 @@ You will notice that the generated code now has a line `using FastMember;` We us
 "defaultConnection": "Data Source=MyServer;Database=Northwind;Trusted_Connection=True;",
 "provider": "Microsoft.Data.SqlClient"
 ```
+
+## Should I use the asterisk ?
+
+**TL;dr** Don't use asterisk queries without understanding the following:
+
+Asterisk queries in SQL generate some controversy. Purists may balk, considering it bad to oblige the rdbms to expand your * into a column list each time the query is run.
+
+QueryFirst muddies this picture. On the one hand, it can be quite exciting to use * queries and watch new properties magically pop up in your dto's and typescript interfaces, and this may be fine for small teams. 
+
+For larger teams, be careful: you will want to clearly distinguish between breaking and non-breaking schema changes. Breaking schema changes (deletions) need to be made rapidly available to all active branches. In gitflow terms, make the schema change in a dedicated branch which you then rapidly merge into develop and all active branches. The subtlety is that **with QueryFirst, if you have asterisk queries in your project, adding a column becomes a breaking change**. Just the presence of the column in the development DB will cause it to be referenced by asterisk queries the next time they are regenerated, in any branch. These queries will then generate exceptions if they are deployed on a DB instance that doesn't yet have the new column. (The repository is expecting more columns than it receives, and will throw an IndexOutOfRange exception.) _Is that clear ?!_ Using QueryFirst [SelfTest()](/selftest.html) in your deployments will protect you in this situation.
