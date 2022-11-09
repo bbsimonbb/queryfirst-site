@@ -126,3 +126,8 @@ QueryFirst muddies this picture. On the one hand, it can be quite exciting to us
 For larger teams, be careful: you will want to clearly distinguish between breaking and non-breaking schema changes. Breaking schema changes (normally deletions) need to be made rapidly available to all active branches. Make the schema change in a dedicated branch. Get your app building against the new schema, then rapidly merge into develop and all active branches. Non-breaking schema changes can live quietly in a feature branch until that branch is merged.
 
 The subtlety is that **with QueryFirst, if you have asterisk queries in your project, adding a column becomes a breaking change**. Just the presence of the column in the development DB will cause it to be picked up by asterisk queries the next time they are regenerated, in any branch. These queries will then throw if they are deployed on a DB instance that doesn't yet have the new column. (The repository class is expecting more columns than it receives, and will throw an IndexOutOfRange exception.) _Is that clear ?!_ Using QueryFirst [SelfTest()](/selftest.html) in your deployments will alert you, but won't fix the underlying problem.
+
+There are two strategies for dealing with this.
+
+1. Ban asterisk queries, or...
+2. Consider all schema changes as potentially breaking changes. Use a dedicated, short-lived branch to regenerate all queries against the new schema, and merge this branch into develop before the next release.
