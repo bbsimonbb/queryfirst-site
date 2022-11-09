@@ -131,3 +131,5 @@ There are two strategies for dealing with this.
 
 1. Ban asterisk queries, or...
 2. Consider all schema changes as potentially breaking changes. Use a dedicated, short-lived branch to regenerate all queries against the new schema, and merge this branch into develop before the next release.
+
+Let's be careful out there :-)
