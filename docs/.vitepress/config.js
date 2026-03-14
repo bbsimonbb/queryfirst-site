@@ -3,6 +3,14 @@ export default {
   description: "Frictionless data access for C# projects",
   base: "/",
   themeConfig: {
+    darkMode: true,
+    code: {
+      copy: true,
+    },
+    search: {
+      provider: "local",
+      placeholder: "Search QueryFirst docs...",
+    },
     sidebar: [
       {
         text: "Guide",
