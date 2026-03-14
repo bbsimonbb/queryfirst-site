@@ -1,6 +1,7 @@
 export default {
   title: "QueryFirst",
   description: "Frictionless data access for C# projects",
+  base: "/",
   themeConfig: {
     sidebar: [
       {
